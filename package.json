@@ -8,6 +8,7 @@
     "leaflet": "^1.4.0",
     "popper.js": "^1.14.6",
     "react": "^16.7.0",
+    "react-burger-menu": "^2.6.1",
     "react-dom": "^16.7.0",
     "react-leaflet": "^2.2.0",
     "react-scripts": "2.1.3",

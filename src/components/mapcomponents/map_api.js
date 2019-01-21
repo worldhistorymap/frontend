@@ -5,16 +5,10 @@ import styled from 'styled-components';
 import '../map.css'
 
 class MapAPI extends Component {
-    state = {
-        lat : 47.3769,
-        lng : 8.5417,
-        zoom : 5,
-    };
-
     componentDidMount() {
         this.map = L.map('map', {
-            center: [this.state.lat, this.state.lng],
-            zoom: this.state.zoom,
+            center: [47.3769, 8.5417],
+            zoom: 5,
             zoomControl: false
         });
 
