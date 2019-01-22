@@ -13,6 +13,8 @@ class Map extends Component {
         sideBarWidth: "0px",
         sideBarZIndex: -1,
         sideBarOpen: false,
+        wikiRange: 5000,
+        opacity: 70,
     };
 
 
@@ -20,6 +22,16 @@ class Map extends Component {
         const wikiMarkers = L.layerGroup().addTo(map);
         this.setState({wikiMarkers, map})
     };
+
+    removeWikiMarkers = () => {
+        if (this.state.wikiMarkers != []) {
+            this.state.wikiMarkers.clearLayers();
+        }
+    }
+
+    removeMarkers  = () => {
+        this.removeWikiMarkers();
+    }
 
     toggleSideBar = () => {
         if (!this.state.sideBarOpen) {
@@ -35,13 +47,48 @@ class Map extends Component {
         }
     };
 
+    setWikiRange = val => {
+        if (val < 11) {
+            val = 11;
+        }
+        if (val > 9999) {
+            val = 9999;
+        }
+        this.setState({wikiRange: val})
+    }
+
+    setOpacity = val => {
+        console.log(val);
+        if (val <= 0) {
+            val = 1;
+        }
+        if (val >= 99) {
+            val = 99;
+        }
+        this.setState({opacity: val});
+    }
+
     render () {
         return (
             <React.Fragment>
-                    <NavBar toggleSideBar = {this.toggleSideBar}/>
+                    <NavBar toggleSideBar = {this.toggleSideBar}
+                            removeWikiMarkers = {this.removeWikiMarkers}
+                            removeMarkers = {this.removeMarkers}
+                            opacity = {this.state.opacity}
+                            wikiRange = {this.state.wikiRange}
+                            map = {this.state.map}
+                            />
                     <div id="content">
-                        <SideBar width = {this.state.sideBarWidth} zIndex = {this.state.sideBarZIndex}/>
-                        <MapAPI setMap={this.setMap}/>
+                        <SideBar width = {this.state.sideBarWidth}
+                                 zIndex = {this.state.sideBarZIndex}
+                                 removeWikiMarkers = {this.removeWikiMarkers}
+                                 removeMarkers = {this.removeMarkers}
+                                 setWikiRange= {this.setWikiRange}
+                                 setOpacity = {this.setOpacity}
+
+                        />
+                        <MapAPI setMap={this.setMap}
+                            mapContainer = "content"/>
                     </div>
             </React.Fragment>
         )

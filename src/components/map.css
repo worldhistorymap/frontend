@@ -27,3 +27,7 @@
     transition: all 0.3s;
 }
 
+#searchbar {
+    height: 95%;
+    width: 10%;
+}
