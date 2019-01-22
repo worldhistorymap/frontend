@@ -18,19 +18,13 @@ class Map extends Component {
     };
 
 
-    setMap = map => {
-        const wikiMarkers = L.layerGroup().addTo(map);
-        this.setState({wikiMarkers, map})
-    };
 
     removeWikiMarkers = () => {
-        if (this.state.wikiMarkers != []) {
-            this.state.wikiMarkers.clearLayers();
-        }
+        return;
     }
 
     removeMarkers  = () => {
-        this.removeWikiMarkers();
+        return;
     }
 
     toggleSideBar = () => {
@@ -68,28 +62,33 @@ class Map extends Component {
         this.setState({opacity: val});
     }
 
+    onClick = (e) => {
+       const lat = e.latlng.lat;
+       const lng = e.latlng.lng;
+       console.log(lat, lng);
+    }
+
     render () {
         return (
             <React.Fragment>
-                    <NavBar toggleSideBar = {this.toggleSideBar}
-                            removeWikiMarkers = {this.removeWikiMarkers}
-                            removeMarkers = {this.removeMarkers}
-                            opacity = {this.state.opacity}
-                            wikiRange = {this.state.wikiRange}
-                            map = {this.state.map}
-                            />
-                    <div id="content">
-                        <SideBar width = {this.state.sideBarWidth}
-                                 zIndex = {this.state.sideBarZIndex}
-                                 removeWikiMarkers = {this.removeWikiMarkers}
-                                 removeMarkers = {this.removeMarkers}
-                                 setWikiRange= {this.setWikiRange}
-                                 setOpacity = {this.setOpacity}
+                <NavBar toggleSideBar={this.toggleSideBar}
+                        removeWikiMarkers={this.removeWikiMarkers}
+                        removeMarkers={this.removeMarkers}
+                        opacity={this.state.opacity}
+                        wikiRange={this.state.wikiRange}
+                        map={this.state.map}
+                />
+                <div id="content">
+                    <SideBar width={this.state.sideBarWidth}
+                             zIndex={this.state.sideBarZIndex}
+                             removeWikiMarkers={this.removeWikiMarkers}
+                             removeMarkers={this.removeMarkers}
+                             setWikiRange={this.setWikiRange}
+                             setOpacity={this.setOpacity}
 
-                        />
-                        <MapAPI setMap={this.setMap}
-                            mapContainer = "content"/>
-                    </div>
+                    />
+                    <MapAPI onClick={this.onClick}/>
+                </div>
             </React.Fragment>
         )
     }
