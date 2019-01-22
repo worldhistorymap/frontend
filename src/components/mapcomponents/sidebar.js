@@ -8,7 +8,10 @@ class SideBar extends Component {
             <div id="sidebar" style={{width: this.props.width, zIndex: this.props.zIndex}}>
                 <ul className="list-unstyled components">
                     <li>
-                        Wikipedia Range
+                        Recommendations
+                    </li>
+                    <li>
+                        Add Pin
                     </li>
                     <li>
                        About

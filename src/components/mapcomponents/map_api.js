@@ -19,6 +19,8 @@ class MapAPI extends Component {
                 id: 'mapbox.streets',
                 accessToken: 'pk.eyJ1IjoidmFpYmhhdmoiLCJhIjoiY2pmZ2d1NDVjMjdzMDMzbWlhdTRtZXAyZyJ9.X3KDHMveDXHRh795LdSFmw',
             }).addTo(this.map);
+
+        this.props.setMap(this.map);
     }
 
     render () {
