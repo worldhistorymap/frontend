@@ -7,7 +7,7 @@
 
 #map {
     position: absolute;
-    bottom:0%;
+    bottom:0;
     height:100%;
     width:100%;
     z-index:0;
@@ -16,7 +16,7 @@
 #navbar {
     position: absolute;
     top: 0;
-    opacity: 1;
+    opacity: 0;
     height: 7%;
 }
 

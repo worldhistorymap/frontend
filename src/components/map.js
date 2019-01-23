@@ -16,9 +16,12 @@ class Map extends Component {
         sideBarOpen: false,
         wikiRange: 5000,
         opacity: 70,
+        markers: [],
+        markerNum: 0,
+        nullMarkers: [],
     };
 
-
+    WikiPageUrl =  "https://en.wikipedia.org/?curid=";
 
     removeWikiMarkers = () => {
         return;
@@ -50,7 +53,7 @@ class Map extends Component {
             val = 9999;
         }
         this.setState({wikiRange: val})
-    }
+    };
 
     setOpacity = val => {
         console.log(val);
@@ -61,7 +64,20 @@ class Map extends Component {
             val = 99;
         }
         this.setState({opacity: val});
-    }
+    };
+
+    addNoWikiMarker = (lat,lng) => {
+        let nullMarkers = [...this.state.nullMarkers];
+        nullMarkers.push({lat, lng});
+        this.setState({nullMarkers});
+    };
+
+    addWikiMarker = (lat, lng, pageid, title) => {
+        let markers = [...this.state.markers];
+        const url = this.WikiPageUrl + pageid;
+        markers.push({key: [lat,lng], lat: lat, lng: lng, url: url, title: title})
+        this.setState({markers});
+    };
 
     /** put text render in promise **/
     wikiCall = (lnk, lat, lng) => {
@@ -69,9 +85,9 @@ class Map extends Component {
             .then(data => {
                 const articles = data.query.geosearch;
                 if (articles.length === 0) {
-                    /*addNoWikiMarker(lat, lng); */
+                    this.addNoWikiMarker(lat, lng);
                 } else {
-                    /*addWikiMarkers(articles); */
+                    articles.map(article => this.addWikiMarker(article.lat, article.lon, article.pageid, article.title));
                 }
             })
     }
@@ -99,17 +115,9 @@ class Map extends Component {
                         wikiRange={this.state.wikiRange}
                         map={this.state.map}
                 />
-                <div id="content">
-                    <SideBar width={this.state.sideBarWidth}
-                             zIndex={this.state.sideBarZIndex}
-                             removeWikiMarkers={this.removeWikiMarkers}
-                             removeMarkers={this.removeMarkers}
-                             setWikiRange={this.setWikiRange}
-                             setOpacity={this.setOpacity}
-
-                    />
-                    <MapAPI onClick={this.onClick}/>
-                </div>
+                <MapAPI onClick={this.onClick}
+                markers={this.state.markers}
+                nullMarkers = {this.state.nullMarkers}/>
             </React.Fragment>
         )
     }

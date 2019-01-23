@@ -9,10 +9,6 @@ class SideBar extends Component {
         wikiRange: 5000,
     };
 
-    handleSubmit = (e) => {
-       e.preventDefault();
-       console.log("submitted");
-    }
 
     handleOpacity = (e) => {
         const val = e.target.value;
@@ -41,22 +37,24 @@ class SideBar extends Component {
                         </button>
                     </li>
                     <li>
-                        <form onSubmit={this.handleSubmit}>
-                            <FormGroup
-                                controlId="formBasicText"
-                            >
-                                <ControlLabel>Change the Search Range Radius in meters for Articles</ControlLabel>
-                                <FormControl
-                                    type="number"
-                                    placeholder="Enter a number between 10 and 10000"
-                                    onChange = {this.handleWikiRange}
-                                />
-                                <FormControl.Feedback />
-                                <Button
-                                    onClick={() => this.props.setWikiRange(this.state.wikiRange)}
-                                    className="btn btn-primary btn-large centerButton" type="submit" >Change Range</Button>
-                            </FormGroup>
-                        </form>
+                        <div className ="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <form className="dropdown-item form-inline" onSubmit={this.handleSubmit}>
+                                <FormGroup
+                                    controlId="formBasicText"
+                                >
+                                    <ControlLabel>Change the Search Range Radius in meters for Articles</ControlLabel>
+                                    <FormControl
+                                        type="number"
+                                        placeholder="Enter a number between 10 and 10000"
+                                        onChange = {this.handleWikiRange}
+                                    />
+                                    <FormControl.Feedback />
+                                    <Button
+                                        onClick={() => this.props.setWikiRange(this.state.wikiRange)}
+                                        className="btn btn-primary btn-large centerButton" type="submit" >Change Range</Button>
+                                </FormGroup>
+                            </form>
+                        </div>
                     </li>
                     <li>
                        <form onSubmit={this.handleSubmit}>

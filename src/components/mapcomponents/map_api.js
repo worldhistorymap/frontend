@@ -1,10 +1,11 @@
 import React, {Component} from "react";
 import 'leaflet/dist/leaflet.css'
-import styled from 'styled-components';
 import '../map.css'
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
+import MapMarker from "./mapmarker"
 
 class MapAPI extends Component {
+
     render () {
         const position = [47.3768, 8.5417]
         return (
@@ -18,6 +19,18 @@ class MapAPI extends Component {
                     id= 'mapbox.streets'
                     accessToken = 'pk.eyJ1IjoidmFpYmhhdmoiLCJhIjoiY2pmZ2d1NDVjMjdzMDMzbWlhdTRtZXAyZyJ9.X3KDHMveDXHRh795LdSFmw'
                 />
+                {this.props.markers.map(marker => (
+                    <MapMarker key = {marker.key} position={[marker.lat, marker.lng]} url = {marker.url} title = {marker.title} />
+                ))}
+                {this.props.nullMarkers.map (
+                    nullMarker => (
+                        <Marker key = {nullMarker} position = {nullMarker}>
+                            <Popup>
+                                <p>There are no articles in this area. Try expanding the search range.</p>
+                            </Popup>
+                        </Marker>
+                    )
+                )}
             </Map>
         )
     }
