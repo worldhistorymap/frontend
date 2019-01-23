@@ -2,10 +2,15 @@ import React, {Component} from "react";
 import {Marker, Popup} from "react-leaflet";
 import L from "leaflet";
 import util from "util"
+import "../map.css"
 
 class MapMarker extends Component {
 
+    state = {
+        extract: ""
+    }
     componentDidMount() {
+        this.getExtract(this.props.title);
     }
 
     getExtract = title => {
@@ -27,7 +32,8 @@ class MapMarker extends Component {
         return(
             <Marker position={this.props.position} icon={icon}>
                 <Popup>
-                    <button className="btn btn-primary" onClick = {() => window.open(this.props.url, "_blank")}> {this.props.title} </button>
+                    <button className="btn btn-primary btn-marker" onClick = {() => window.open(this.props.url, "_blank")}> {this.props.title} </button>
+                    <text>{this.state.extract}</text>
                 </Popup>
             </Marker>
         );

@@ -3,11 +3,17 @@ import 'leaflet/dist/leaflet.css'
 import '../map.css'
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
 import MapMarker from "./mapmarker"
+import L from "leaflet";
 
 class MapAPI extends Component {
 
     render () {
         const position = [47.3768, 8.5417]
+        const icon = L.icon({
+            iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+            iconUrl: require('leaflet/dist/images/marker-icon.png'),
+            shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+        });
         return (
             <Map zoomControl = {false}
                  onClick = {(e) => this.props.onClick(e)}
@@ -24,7 +30,7 @@ class MapAPI extends Component {
                 ))}
                 {this.props.nullMarkers.map (
                     nullMarker => (
-                        <Marker key = {nullMarker} position = {nullMarker}>
+                        <Marker key = {nullMarker} position = {nullMarker} icon = {icon}>
                             <Popup>
                                 <p>There are no articles in this area. Try expanding the search range.</p>
                             </Popup>
