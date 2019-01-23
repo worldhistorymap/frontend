@@ -73,9 +73,11 @@ class Map extends Component {
     };
 
     addWikiMarker = (lat, lng, pageid, title) => {
+        const pos = [lat,lng];
         let markers = [...this.state.markers];
         const url = this.WikiPageUrl + pageid;
-        markers.push({key: [lat,lng], lat: lat, lng: lng, url: url, title: title})
+        markers.filter(c => c.key == pos)
+        markers.push({key: pos, lat: lat, lng: lng, url: url, title: title})
         this.setState({markers});
     };
 

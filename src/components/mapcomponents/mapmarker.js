@@ -1,11 +1,11 @@
 import React, {Component} from "react";
 import {Marker, Popup} from "react-leaflet";
+import L from "leaflet";
 import util from "util"
 
 class MapMarker extends Component {
 
     componentDidMount() {
-        this.getExtract(this.props.title);
     }
 
     getExtract = title => {
@@ -19,11 +19,15 @@ class MapMarker extends Component {
     }
 
     render () {
+        const icon = L.icon({
+            iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+            iconUrl: require('leaflet/dist/images/marker-icon.png'),
+            shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+        });
         return(
-            <Marker position={this.props.position}>
+            <Marker position={this.props.position} icon={icon}>
                 <Popup>
                     <button className="btn btn-primary" onClick = {() => window.open(this.props.url, "_blank")}> {this.props.title} </button>
-                    <textarea className="form-control form-rounded"> {this.getExtract(this.props.title)} </textarea>
                 </Popup>
             </Marker>
         );
