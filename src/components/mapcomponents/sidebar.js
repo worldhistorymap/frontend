@@ -66,7 +66,7 @@ class SideBar extends Component {
                                 <ControlLabel>Change the Search Range Radius in meters for Articles</ControlLabel>
                                 <FormControl
                                     type="number"
-                                    placeholder="Enter a Opacity Percetage between 1 and 99"
+                                    placeholder="Enter a Opacity Percentage between 1 and 99"
                                     onChange = {this.handleOpacity}
                                 />
                                 <FormControl.Feedback />

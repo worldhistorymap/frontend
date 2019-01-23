@@ -62,10 +62,29 @@ class Map extends Component {
         this.setState({opacity: val});
     }
 
+    /** put text render in promise **/
+    wikiCall = (url, lat, lng) => {
+        fetch(url).then(response => response.json())
+            .then(data => {
+                const articles = data.query.geosearch;
+                if (articles.length === 0) {
+                    addNoWikiMarker(lat, lng);
+                } else {
+                    addWikiMarkers(articles);
+                }
+            })
+    }
+
     onClick = (e) => {
        const lat = e.latlng.lat;
        const lng = e.latlng.lng;
+       const fileReturnLimit = 5;
        console.log(lat, lng);
+       const url = ("https://en.wikipedia.org/w/api.php?" +
+            "action=query&origin=*&list=geosearch&gscoord={0}|{1}" +
+            "&gsradius={3}&gslimit={4}&prop=info|extracts&inprop=url" +
+            "&format=json").format(lat, lng, this.state.wikiRange, fileReturnLimit );
+       this.wikiCall(url, lat, lng);
     }
 
     render () {
