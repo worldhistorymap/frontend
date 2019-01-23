@@ -29,12 +29,12 @@ class SideBar extends Component {
             <div id="sidebar" style={{width: this.props.width, zIndex: this.props.zIndex}}>
                 <ul className="list-unstyled components">
                     <li>
-                        <button onClick={() => this.props.removeWikiMarkers()} type="button" id="sidebarCollapse"
+                        <button onClick={() => this.props.removeWikiMarkers()} type="button"
                                 className="btn btn-info">
                             <i className="fas fa-align-left"></i>
                             <span>Clear All Wikipedia Markers</span>
                         </button>
-                        <button onClick={() => this.props.removeMarkers()} type="button" id="sidebarCollapse"
+                        <button onClick={() => this.props.removeMarkers()} type="button"
                             className="btn btn-info">
                             <i className="fas fa-align-left"></i>
                             <span>Clear All Markers</span>

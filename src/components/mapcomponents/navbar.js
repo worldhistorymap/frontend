@@ -6,38 +6,25 @@ class NavBar extends Component {
     render () {
         return (
             <React.Fragment>
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
-
+                <nav className="navbar navbar-expand-sm navbar-light bg-light navbar-fixed-top">
                     <div className="container-fluid">
-                        <button onClick={() => this.props.toggleSideBar()} type="button" id="sidebarCollapse"
-                                className="btn btn-info">
-                            <i className="fas fa-align-left"></i>
-                            <span>SideBar</span>
-                        </button>
-                        <div>
-                            <button onClick={() => this.props.toggleSideBar()} type="button" id="sidebarCollapse"
-                                    className="btn btn-info">
-                                <i className="fas fa-align-left"></i>
-                                <span>Tile Opacity: {this.props.opacity} %</span>
-                            </button>
-                            <button onClick={() => this.props.toggleSideBar()} type="button" id="sidebarCollapse"
-                                    className="btn btn-info">
-                                <i className="fas fa-align-left"></i>
-                                <span>Current Article Search Radius: {this.props.wikiRange} m</span>
-                            </button>
-                        </div>
-                        <div>
-                            <button onClick={() => this.props.toggleSideBar()} type="button" id="sidebarCollapse"
-                                    className="btn btn-info">
-                                <i className="fas fa-align-left"></i>
-                                <span>SignUp</span>
-                            </button>
-                            <button onClick={() => this.props.toggleSideBar()} type="button" id="sidebarCollapse"
-                                    className="btn btn-info">
-                                <i className="fas fa-align-left"></i>
-                                <span>Login</span>
-                            </button>
-                        </div>
+                        <ul className="nav navbar-nav" >
+                            <li className="nav-item">
+                                <button onClick={() => this.props.toggleSideBar()} type="button" className="btn btn-default navbar-btn">
+                                    SideBar
+                                </button>
+                            </li>
+                            <li className="nav-item">
+                                <button onClick={() => this.props.toggleSideBar()} type="button"
+                                        className="btn btn-default navbar-btn">
+                                    <span>Tile Opacity: {this.props.opacity} %</span>
+                                </button>
+                                <button onClick={() => this.props.toggleSideBar()} type="button"
+                                        className="btn btn-info navbar-btn">
+                                    Current Article Search Radius: {this.props.wikiRange} m
+                                </button>
+                            </li>
+                        </ul>
                     </div>
                 </nav>
             </React.Fragment>

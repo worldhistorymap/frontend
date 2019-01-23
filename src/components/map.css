@@ -1,22 +1,38 @@
 #content {
     position: absolute;
-    height: 95%;
+    top: 7%;
+    height: 100%;
     width: 100%;
 }
 
 #map {
     position: absolute;
+    bottom:0%;
     height:100%;
     width:100%;
     z-index:0;
 }
 
-
 #navbar {
-    opacity: 0;
-    height: 5%;
+    position: absolute;
+    top: 0;
+    opacity: 1;
+    height: 7%;
 }
 
+.navbar-nav {
+    flex-direction: row;
+}
+
+.nav {
+    display: inline-block;
+}
+
+.nav-item {
+    position: absolute;
+    height: 75%;
+    top: 10%;
+}
 
 #sidebar {
     position: absolute;

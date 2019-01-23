@@ -3,6 +3,7 @@ import React, {Component} from "react";
 import MapAPI from "./mapcomponents/map_api"
 import SideBar from "./mapcomponents/sidebar"
 import NavBar from "./mapcomponents/navbar"
+import util from  "util"
 import L from "leaflet"
 import "./map.css"
 
@@ -63,14 +64,14 @@ class Map extends Component {
     }
 
     /** put text render in promise **/
-    wikiCall = (url, lat, lng) => {
-        fetch(url).then(response => response.json())
+    wikiCall = (lnk, lat, lng) => {
+        fetch(lnk).then(response => response.json())
             .then(data => {
                 const articles = data.query.geosearch;
                 if (articles.length === 0) {
-                    addNoWikiMarker(lat, lng);
+                    /*addNoWikiMarker(lat, lng); */
                 } else {
-                    addWikiMarkers(articles);
+                    /*addWikiMarkers(articles); */
                 }
             })
     }
@@ -80,11 +81,12 @@ class Map extends Component {
        const lng = e.latlng.lng;
        const fileReturnLimit = 5;
        console.log(lat, lng);
-       const url = ("https://en.wikipedia.org/w/api.php?" +
-            "action=query&origin=*&list=geosearch&gscoord={0}|{1}" +
-            "&gsradius={3}&gslimit={4}&prop=info|extracts&inprop=url" +
-            "&format=json").format(lat, lng, this.state.wikiRange, fileReturnLimit );
-       this.wikiCall(url, lat, lng);
+       let lnk = util.format("https://en.wikipedia.org/w/api.php?" +
+            "action=query&origin=*&list=geosearch&gscoord=%d|%d" +
+            "&gsradius=%d&gslimit=%d&prop=info|extracts&inprop=url" +
+            "&format=json", lat, lng, this.state.wikiRange, fileReturnLimit);
+       console.log(lnk);
+       this.wikiCall(lnk, lat, lng);
     }
 
     render () {
