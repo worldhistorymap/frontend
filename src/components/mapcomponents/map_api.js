@@ -7,6 +7,10 @@ import L from "leaflet";
 
 class MapAPI extends Component {
 
+     MAPBOX_API = process.env.REACT_APP_MAPBOX_API;
+     tileRegions = ["iberia", "medieval_middle_east", "northern_europe"];
+     tileRegionServer = process.env.REACT_APP_TILE_SERVER;
+
     render () {
         const position = [47.3768, 8.5417]
         const icon = L.icon({
@@ -23,8 +27,12 @@ class MapAPI extends Component {
                     attribution= 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
                     maxZoom= "18"
                     id= 'mapbox.streets'
-                    accessToken = 'pk.eyJ1IjoidmFpYmhhdmoiLCJhIjoiY2pmZ2d1NDVjMjdzMDMzbWlhdTRtZXAyZyJ9.X3KDHMveDXHRh795LdSFmw'
+                    accessToken = {this.MAPBOX_API}
                 />
+                {this.tileRegions.map( region => (
+                   <TileLayer
+                   />
+                    ))}
                 {this.props.markers.map(marker => (
                     <MapMarker key = {marker.id} position={[marker.lat, marker.lng]} url = {marker.url} title = {marker.title} />
                 ))}

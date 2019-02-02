@@ -10,6 +10,7 @@ class NavBar extends Component {
 
     preventDefault = (e) => {
         e.preventDefault();
+        e.stopPropagation();
     }
 
     handleOpacity = (e) => {
@@ -31,11 +32,11 @@ class NavBar extends Component {
                     <div className="container-fluid">
                         <ul className="nav navbar-nav" >
                             <li>
-                                <Dropdown id="dropdown" onClick = {this.preventDefault} >
+                                <Dropdown id="dropdown" >
                                     <Dropdown.Toggle className="btn btn-info navbar-btn">
                                         {opacityTile}
                                     </Dropdown.Toggle>
-                                    <DropdownMenu>
+                                    <DropdownMenu onClick = {e => this.preventDefault(e)}>
                                         <MenuItem>
                                         <form onSubmit={this.preventDefault}>
                                             <FormGroup
