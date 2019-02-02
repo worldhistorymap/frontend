@@ -10,13 +10,13 @@ class MapAPI extends Component {
     render () {
         const position = [47.3768, 8.5417]
         const icon = L.icon({
-            iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
             iconUrl: require('leaflet/dist/images/marker-icon.png'),
-            shadowUrl: require('leaflet/dist/images/marker-shadow.png')
         });
         return (
             <Map zoomControl = {false}
+                 ref={(ref) => { this.map = ref; }}
                  onClick = {(e) => this.props.onClick(e)}
+                 onMouseMove = {(e) => this.props.onMouseMove(e, this.map.leafletElement.getZoom())}
                  id = "map" center={position} zoom={6}>
                 <TileLayer
                     url='https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}'
@@ -26,11 +26,11 @@ class MapAPI extends Component {
                     accessToken = 'pk.eyJ1IjoidmFpYmhhdmoiLCJhIjoiY2pmZ2d1NDVjMjdzMDMzbWlhdTRtZXAyZyJ9.X3KDHMveDXHRh795LdSFmw'
                 />
                 {this.props.markers.map(marker => (
-                    <MapMarker key = {marker.key} position={[marker.lat, marker.lng]} url = {marker.url} title = {marker.title} />
+                    <MapMarker key = {marker.id} position={[marker.lat, marker.lng]} url = {marker.url} title = {marker.title} />
                 ))}
                 {this.props.nullMarkers.map (
                     nullMarker => (
-                        <Marker key = {nullMarker} position = {nullMarker} icon = {icon}>
+                        <Marker key = {nullMarker.id} position = {[nullMarker.lat, nullMarker.lng]} icon = {icon}>
                             <Popup>
                                 <p>There are no articles in this area. Try expanding the search range.</p>
                             </Popup>

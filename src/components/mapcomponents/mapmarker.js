@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Marker, Popup} from "react-leaflet";
-import L from "leaflet";
+import L from "leaflet"
 import util from "util"
 import "../map.css"
 
@@ -18,7 +18,6 @@ class MapMarker extends Component {
         fetch(util.format("http://en.wikipedia.org/api/rest_v1/page/summary/%s", title))
             .then(response => response.json())
             .then(data => {
-                console.log(data.extract);
                 this.setState({extract: data.extract});
             });
     }
@@ -33,7 +32,7 @@ class MapMarker extends Component {
             <Marker position={this.props.position} icon={icon}>
                 <Popup>
                     <button className="btn btn-primary btn-marker" onClick = {() => window.open(this.props.url, "_blank")}> {this.props.title} </button>
-                    <text>{this.state.extract}</text>
+                    <p>{this.state.extract}</p>
                 </Popup>
             </Marker>
         );

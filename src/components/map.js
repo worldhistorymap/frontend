@@ -1,10 +1,8 @@
 import React, {Component} from "react";
 
 import MapAPI from "./mapcomponents/map_api"
-import SideBar from "./mapcomponents/sidebar"
 import NavBar from "./mapcomponents/navbar"
 import util from  "util"
-import L from "leaflet"
 import "./map.css"
 
 
@@ -19,16 +17,29 @@ class Map extends Component {
         markers: [],
         markerNum: 0,
         nullMarkers: [],
+        wikiMarkerNum: 1,
+        noArticleMarkerNum: 1,
     };
 
     WikiPageUrl =  "https://en.wikipedia.org/?curid=";
 
+
+    componentDidMount() {
+        /**Function copied from  https://stackoverflow.com/questions/21513646/how-to-get-x-y-z-coordinates-of-tile-by-click-on-leaflet-map **/
+        if (typeof (Number.prototype.toRad) === "undefined") {
+            Number.prototype.toRad = function () {
+                return this * Math.PI / 180;
+            }
+        }
+    }
+
     removeWikiMarkers = () => {
-        return;
+       this.setState({markers: []});
     }
 
     removeMarkers  = () => {
-        return;
+        this.removeWikiMarkers();
+        this.setState({nullMarkers: []});
     }
 
     toggleSideBar = () => {
@@ -68,17 +79,17 @@ class Map extends Component {
 
     addNoWikiMarker = (lat,lng) => {
         let nullMarkers = [...this.state.nullMarkers];
-        nullMarkers.push({lat, lng});
-        this.setState({nullMarkers});
+        nullMarkers.push({lat: lat, lng: lng, id: this.state.noArticleMarkerNum});
+        this.setState({nullMarkers, noArticleMarkerNum: this.state.noArticleMarkerNum + 1});
     };
 
     addWikiMarker = (lat, lng, pageid, title) => {
         const pos = [lat,lng];
         let markers = [...this.state.markers];
         const url = this.WikiPageUrl + pageid;
-        markers.filter(c => c.key == pos)
-        markers.push({key: pos, lat: lat, lng: lng, url: url, title: title})
-        this.setState({markers});
+        markers.filter(c => c.lat === lat && c.lng === lng);
+        markers.push({id: this.state.wikiMarkerNum, lat: lat, lng: lng, url: url, title: title});
+        this.setState({markers, wikiMarkerNum: this.state.wikiMarkerNum + 1});
     };
 
     /** put text render in promise **/
@@ -92,20 +103,34 @@ class Map extends Component {
                     articles.map(article => this.addWikiMarker(article.lat, article.lon, article.pageid, article.title));
                 }
             })
-    }
+    };
 
-    onClick = (e) => {
+
+    mapOnClick = (e) => {
        const lat = e.latlng.lat;
        const lng = e.latlng.lng;
        const fileReturnLimit = 5;
-       console.log(lat, lng);
        let lnk = util.format("https://en.wikipedia.org/w/api.php?" +
             "action=query&origin=*&list=geosearch&gscoord=%d|%d" +
             "&gsradius=%d&gslimit=%d&prop=info|extracts&inprop=url" +
             "&format=json", lat, lng, this.state.wikiRange, fileReturnLimit);
-       console.log(lnk);
        this.wikiCall(lnk, lat, lng);
+    };
+
+    getTileCoordinates = (lat, lng, zoom) => {
+        /**Function copied from  https://stackoverflow.com/questions/21513646/how-to-get-x-y-z-coordinates-of-tile-by-click-on-leaflet-map **/
+        const x = parseInt(Math.floor( (lng + 180) / 360 * (1<<zoom) ));
+        const y = parseInt(Math.floor( (1 - Math.log(Math.tan(lat.toRad()) + 1 / Math.cos(lat.toRad())) / Math.PI) / 2 * (1<<zoom) ));
+        return "" + zoom + "/" + x + "/" + y;
     }
+
+    mapOnMouseMove = (e, zoom) => {
+        const lat = e.latlng.lat;
+        const lng = e.latlng.lng;
+        console.log("zoom:", zoom);
+        console.log(this.getTileCoordinates(lat, lng, zoom));
+    };
+
 
     render () {
         return (
@@ -116,8 +141,10 @@ class Map extends Component {
                         opacity={this.state.opacity}
                         wikiRange={this.state.wikiRange}
                         map={this.state.map}
+                        setOpacity={this.setOpacity}
                 />
-                <MapAPI onClick={this.onClick}
+                <MapAPI onClick={this.mapOnClick}
+                        onMouseMove = {this.mapOnMouseMove}
                 markers={this.state.markers}
                 nullMarkers = {this.state.nullMarkers}/>
             </React.Fragment>
