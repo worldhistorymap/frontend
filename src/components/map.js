@@ -19,8 +19,16 @@ class Map extends Component {
         nullMarkers: [],
         wikiMarkerNum: 1,
         noArticleMarkerNum: 1,
+        year: 2019,
+        baseTiles: this.STAMEN_TERRAIN,
     };
 
+    STAMEN_TERRAIN = 'https://stamen-tiles-{s}.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}{r}.png';
+    MAPBOX_CITY = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
+    /* Add back in attributes.
+    MAPBOX_ATTRIBUTE = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
+    STAMMEN_ATTRIBUTE = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    */
     WikiPageUrl =  "https://en.wikipedia.org/?curid=";
 
 
@@ -35,25 +43,11 @@ class Map extends Component {
 
     removeWikiMarkers = () => {
        this.setState({markers: []});
-    }
+    };
 
     removeMarkers  = () => {
         this.removeWikiMarkers();
         this.setState({nullMarkers: []});
-    }
-
-    toggleSideBar = () => {
-        if (!this.state.sideBarOpen) {
-            const sideBarWidth = "20%";
-            const sideBarZIndex = 1;
-            const sideBarOpen = true;
-            this.setState({sideBarWidth, sideBarZIndex, sideBarOpen})
-        } else {
-            const sideBarWidth = "0";
-            const sideBarZIndex = -1;
-            const sideBarOpen = false;
-            this.setState({sideBarWidth, sideBarZIndex, sideBarOpen})
-        }
     };
 
     setWikiRange = val => {
@@ -67,7 +61,6 @@ class Map extends Component {
     };
 
     setOpacity = val => {
-        console.log(val);
         if (val <= 0) {
             val = 1;
         }
@@ -84,7 +77,6 @@ class Map extends Component {
     };
 
     addWikiMarker = (lat, lng, pageid, title) => {
-        const pos = [lat,lng];
         let markers = [...this.state.markers];
         const url = this.WikiPageUrl + pageid;
         markers.filter(c => c.lat === lat && c.lng === lng);
@@ -127,26 +119,38 @@ class Map extends Component {
     mapOnMouseMove = (e, zoom) => {
         const lat = e.latlng.lat;
         const lng = e.latlng.lng;
-        console.log("zoom:", zoom);
-        console.log(this.getTileCoordinates(lat, lng, zoom));
+        /** Insert search for map zooming over at that time **/
+        this.getTileCoordinates(lat,lng,zoom);
     };
 
+    setYear = year => {
+        if (year > 2019) {
+            year = 2019;
+        } else if (year < -3000) {
+            year = 3000;
+        }
+        this.setState({year});
+    };
 
     render () {
         return (
             <React.Fragment>
-                <NavBar toggleSideBar={this.toggleSideBar}
-                        removeWikiMarkers={this.removeWikiMarkers}
+                <NavBar removeWikiMarkers={this.removeWikiMarkers}
                         removeMarkers={this.removeMarkers}
                         opacity={this.state.opacity}
                         wikiRange={this.state.wikiRange}
                         map={this.state.map}
                         setOpacity={this.setOpacity}
+                        setYear = {this.setYear}
+                        year = {this.state.year}
                 />
+
                 <MapAPI onClick={this.mapOnClick}
                         onMouseMove = {this.mapOnMouseMove}
-                markers={this.state.markers}
-                nullMarkers = {this.state.nullMarkers}/>
+                        markers={this.state.markers}
+                        nullMarkers = {this.state.nullMarkers}
+                        year = {this.state.year}
+                />
             </React.Fragment>
         )
     }

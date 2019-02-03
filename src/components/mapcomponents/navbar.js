@@ -8,20 +8,25 @@ class NavBar extends Component {
         wikiRange: 5000,
     };
 
-    preventDefault = (e) => {
+    preventDefault = e => {
         e.preventDefault();
         e.stopPropagation();
-    }
+    };
 
     handleOpacity = (e) => {
         const val = e.target.value;
         this.setState({opacity: val});
-    }
+    };
 
     handleWikiRange = (e) => {
         const val = e.target.value;
         this.setState({wikiRange: val});
-    }
+    };
+
+    handleYearChange = e => {
+        const year = e.target.value;
+        this.setState({year});
+    };
 
     render () {
         const opacityTile = "Tile Opacity: " + this.props.opacity + "%";
@@ -78,12 +83,21 @@ class NavBar extends Component {
                                                 <FormControl.Feedback />
                                                 <Button
                                                     onClick={() => this.props.setWikiRange(this.state.wikiRange)}
-                                                    className="btn btn-primary btn-large centerButton" type="submit" >Change Range</Button>
+                                                    className="btn btn-primary btn-large centerButton" type="submit" >Change Range </Button>
                                             </FormGroup>
                                         </form>
                                         </MenuItem>
                                     </Dropdown.Menu>
                                 </Dropdown>
+                            </li>
+                            <li>
+                                <form className ="navbar-form" onSubmit={this.preventDefault}>
+                                    <input type='number' placeholder={this.state.year}
+                                    onChange = {this.handleYearChange} />
+                                    <Button
+                                        onClick = {() => this.props.setYear(this.state.year)}
+                                        className="btn btn-info" type="submit"> Change Year from {this.props.year} </Button>
+                                </form>
                             </li>
                         </ul>
                     </div>
