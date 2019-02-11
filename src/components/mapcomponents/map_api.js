@@ -34,6 +34,7 @@ class MapAPI extends Component {
                     maxZoom= "18"
                     id= 'mapbox.streets'
                     accessToken = {this.MAPBOX_API}
+                    zindex={0}
                 />
                 {this.tileRegions.map( region => (
                     /**Having this many TileLayer calls is slow. Merge tilelayers together using gdal_merge, But ensure that a transparent tile from one region does not replace a nontransparent tile from another region
@@ -48,7 +49,6 @@ class MapAPI extends Component {
                        }}
                    />
                    ))}
-
                 {this.props.markers.map(marker => (
                     <MapMarker key = {marker.id} position={[marker.lat, marker.lng]} url = {marker.url} title = {marker.title} />
                 ))}
