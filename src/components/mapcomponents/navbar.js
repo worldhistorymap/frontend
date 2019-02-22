@@ -28,6 +28,30 @@ class NavBar extends Component {
         this.setState({year});
     };
 
+    onToggleOpacity = (open) => {
+        if (this._opacityInputWasClicked) {
+            this._opacityInputWasClicked = false;
+            return;
+        }
+        this.setState({opacityOpen: open});
+    };
+
+    opacityInputWasClicked = () => {
+        this._opacityInputWasClicked = true;
+    };
+
+    onToggleWikiRange = (open) => {
+        if (this._wikiRangeWasClicked) {
+            this._wikiRangeWasClicked = false;
+            return;
+        }
+        this.setState({wikiRangeOpen: open});
+    };
+
+    wikiRangeWasClicked = () => {
+        this._wikiRangeWasClicked = true;
+    };
+
     render () {
         const opacityTile = "Tile Opacity: " + this.props.opacity + "%";
         const articleSearchRadius = "Current Article Search Radius: " + this.props.wikiRange + "m";
@@ -37,13 +61,13 @@ class NavBar extends Component {
                     <div className="container-fluid">
                         <ul className="nav navbar-nav" >
                             <li>
-                                <Dropdown id="dropdown" >
+                                <Dropdown id="dropdown-menu" open={this.state.opacityOpen} onToggle={this.onToggleOpacity}>
                                     <Dropdown.Toggle className="btn btn-info navbar-btn">
                                         {opacityTile}
                                     </Dropdown.Toggle>
                                     <DropdownMenu onClick = {e => this.preventDefault(e)}>
-                                        <MenuItem>
-                                        <form onSubmit={this.preventDefault}>
+                                        <MenuItem onClick={e => this.preventDefault(e)}>
+                                        <form className = "px-4 px-3" onSubmit={this.preventDefault}>
                                             <FormGroup
                                                 controlId="formBasicText"
                                             >
@@ -52,6 +76,7 @@ class NavBar extends Component {
                                                     type="number"
                                                     placeholder="Enter a Opacity Percentage between 1 and 99"
                                                     onChange = {this.handleOpacity}
+                                                    onSelect={this.opacityInputWasClicked}
                                                 />
                                                 <FormControl.Feedback />
                                                 <Button className="btn btn-primary btn-large centerButton"
@@ -64,7 +89,7 @@ class NavBar extends Component {
                                 </Dropdown>
                             </li>
                             <li>
-                                <Dropdown id="dropdown" onClick = {this.preventDefault} >
+                                <Dropdown id="dropdown" open={this.state.wikiRangeOpen} onToggle={this.onToggleWikiRange}>
                                     <Dropdown.Toggle className="btn btn-info navbar-btn">
                                         {articleSearchRadius}
                                     </Dropdown.Toggle>
@@ -79,6 +104,7 @@ class NavBar extends Component {
                                                     type="number"
                                                     placeholder="Enter a number between 10 and 10000"
                                                     onChange = {this.handleWikiRange}
+                                                    onSelect = {this.wikiRangeWasClicked}
                                                 />
                                                 <FormControl.Feedback />
                                                 <Button

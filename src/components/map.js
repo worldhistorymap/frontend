@@ -139,6 +139,7 @@ class Map extends Component {
                         removeMarkers={this.removeMarkers}
                         opacity={this.state.opacity}
                         wikiRange={this.state.wikiRange}
+                        setWikiRange={this.setWikiRange}
                         map={this.state.map}
                         setOpacity={this.setOpacity}
                         setYear = {this.setYear}
