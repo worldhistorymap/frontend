@@ -1,0 +1,65 @@
+#content {
+    position: absolute;
+    top: 7%;
+    height: 100%;
+    width: 100%;
+}
+
+#map {
+    position: absolute;
+    bottom:0;
+    height:100%;
+    width:100%;
+    z-index:0;
+}
+
+#navbar {
+    position: absolute;
+    top: 0;
+    opacity: 0;
+    height: 7%;
+}
+
+.navbar-nav {
+    flex-direction: row;
+}
+
+.nav {
+    display: inline-block;
+}
+
+.nav-item {
+    position: absolute;
+    height: 75%;
+    top: 10%;
+}
+
+#recbar {
+    position: absolute;
+    top: 70%;
+    height: 30%;
+    width: 100%;
+    background: #5bc0de;
+    color: #fff;
+}
+
+#searchbar {
+    height: 95%;
+    width: 10%;
+}
+
+.btn-marker {
+    width: 100%;
+}
+
+.opacity-dropdown {
+    width: 400%;
+}
+
+.navbar-right-side-button  {
+   float:right;
+}
+
+.articlesearch-dropdown {
+    width: 200%;
+}
