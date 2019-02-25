@@ -2,6 +2,7 @@ import React, {Component} from "react";
 
 import MapAPI from "./mapcomponents/map_api"
 import NavBar from "./mapcomponents/navbar"
+import RecBar from "./mapcomponents/recbar"
 import util from  "util"
 import "./map.css"
 
@@ -9,9 +10,8 @@ import "./map.css"
 class Map extends Component {
 
     state = {
-        sideBarWidth: "0px",
-        sideBarZIndex: -1,
-        sideBarOpen: false,
+        recBarZIndex: -1,
+        recBarOpen: false,
         wikiRange: 5000,
         opacity: 70,
         markers: [],
@@ -41,6 +41,7 @@ class Map extends Component {
         }
     }
 
+
     removeWikiMarkers = () => {
        this.setState({markers: []});
     };
@@ -68,6 +69,18 @@ class Map extends Component {
             val = 99;
         }
         this.setState({opacity: val});
+    };
+
+    toggleRecBar = () => {
+        if (!this.state.recBarOpen) {
+            const recBarZIndex = 5;
+            const recBarOpen = true;
+            this.setState({recBarZIndex, recBarOpen});
+        } else {
+            const recBarZIndex = -1;
+            const recBarOpen = false;
+            this.setState({recBarZIndex, recBarOpen});
+        }
     };
 
     addNoWikiMarker = (lat,lng) => {
@@ -114,7 +127,7 @@ class Map extends Component {
         const x = parseInt(Math.floor( (lng + 180) / 360 * (1<<zoom) ));
         const y = parseInt(Math.floor( (1 - Math.log(Math.tan(lat.toRad()) + 1 / Math.cos(lat.toRad())) / Math.PI) / 2 * (1<<zoom) ));
         return "" + zoom + "/" + x + "/" + y;
-    }
+    };
 
     mapOnMouseMove = (e, zoom) => {
         const lat = e.latlng.lat;
@@ -144,6 +157,7 @@ class Map extends Component {
                         setOpacity={this.setOpacity}
                         setYear = {this.setYear}
                         year = {this.state.year}
+                        toggleRecBar = {this.toggleRecBar}
                 />
 
                 <MapAPI onClick={this.mapOnClick}
@@ -152,6 +166,8 @@ class Map extends Component {
                         nullMarkers = {this.state.nullMarkers}
                         year = {this.state.year}
                 />
+
+                <RecBar zindex = {this.state.recBarZIndex}/>
             </React.Fragment>
         )
     }

@@ -29,7 +29,11 @@ class MapMarker extends Component {
             shadowUrl: require('leaflet/dist/images/marker-shadow.png')
         });
         return(
-            <Marker position={this.props.position} icon={icon}>
+            <Marker position={this.props.position} icon={icon}
+                    onMouseOver={e => {
+                        e.target.openPopup();
+                    }}
+            >
                 <Popup>
                     <button className="btn btn-primary btn-marker" onClick = {() => window.open(this.props.url, "_blank")}> {this.props.title} </button>
                     <p>{this.state.extract}</p>

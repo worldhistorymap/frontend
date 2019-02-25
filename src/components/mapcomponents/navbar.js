@@ -122,8 +122,14 @@ class NavBar extends Component {
                                     onChange = {this.handleYearChange} />
                                     <Button
                                         onClick = {() => this.props.setYear(this.state.year)}
-                                        className="btn btn-info" type="submit"> Change Year from {this.props.year} </Button>
+                                        className="btn btn-info " type="submit"> Change Year from {this.props.year} </Button>
                                 </form>
+                            </li>
+                            <li>
+                                <Button
+                                    onClick={() => this.props.toggleRecBar}
+                                    className="btn btn-info navbar-btn" type="submit" >  <span> Recommendations</span>
+                                </Button>
                             </li>
                         </ul>
                     </div>
