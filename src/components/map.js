@@ -142,6 +142,11 @@ class Map extends Component {
         } else if (year < -3000) {
             year = 3000;
         }
+
+        if (year == null) {
+            year = this.state.year;
+        }
+
         this.setState({year});
     };
 
