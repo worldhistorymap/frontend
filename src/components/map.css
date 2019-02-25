@@ -36,11 +36,11 @@
 
 #recbar {
     position: absolute;
-    height: 100%;
-    z-index: -1;
-    background: #7386D5;
+    top: 70%;
+    height: 30%;
+    width: 100%;
+    background: #5bc0de;
     color: #fff;
-    transition: all 0.3s;
 }
 
 #searchbar {

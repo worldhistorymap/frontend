@@ -167,7 +167,7 @@ class Map extends Component {
                         year = {this.state.year}
                 />
 
-                <RecBar zindex = {this.state.recBarZIndex}/>
+                <RecBar zIndex={this.state.recBarZIndex}/>
             </React.Fragment>
         )
     }

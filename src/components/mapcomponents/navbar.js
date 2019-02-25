@@ -127,7 +127,7 @@ class NavBar extends Component {
                             </li>
                             <li>
                                 <Button
-                                    onClick={() => this.props.toggleRecBar}
+                                    onClick={() => this.props.toggleRecBar()}
                                     className="btn btn-info navbar-btn" type="submit" >  <span> Recommendations</span>
                                 </Button>
                             </li>
