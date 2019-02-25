@@ -1,12 +1,28 @@
 import React, {Component} from "react";
-import {Button, ControlLabel, FormControl, FormGroup, Dropdown, DropdownButton, MenuItem} from "react-bootstrap";
+import {Modal, Button, ControlLabel, FormControl, FormGroup, Dropdown, DropdownButton, MenuItem} from "react-bootstrap";
 import DropdownMenu from "react-bootstrap/es/DropdownMenu";
+import "./navbar.css";
 
 class NavBar extends Component {
-    state = {
-        opacity: 70,
-        wikiRange: 5000,
-    };
+
+    constructor(props, context) {
+        super(props, context);
+        this.showLogin = this.showLogin.bind(this);
+        this.closeLogin = this.closeLogin.bind(this);
+        this.state = {
+            opacity: 70,
+            wikiRange: 5000,
+        };
+    }
+
+    showLogin() {
+        this.setState({ showLogin: true });
+    }
+
+    closeLogin() {
+        this.setState({ showLogin: false });
+    }
+
 
     preventDefault = e => {
         e.preventDefault();
@@ -132,6 +148,23 @@ class NavBar extends Component {
                                 </Button>
                             </li>
                         </ul>
+                        <Button className="btn btn-primary navbar-btn login-btn" onClick={this.showLogin}>
+                            Login
+                        </Button>
+                        <Modal show={this.state.showLogin} onHide={this.closeLogin}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Login</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body> We will soon have user accounts. These accounts will be used to provide recommendations. Furthermore, we will not sell your data. </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="Primary" onClick={this.closeLogin}>
+                                    Login
+                                </Button>
+                                <Button variant="secondary" onClick={this.closeLogin}>
+                                    SignUp
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                     </div>
                 </nav>
             </React.Fragment>
