@@ -3,6 +3,7 @@ import React, {Component} from "react";
 import MapAPI from "./mapcomponents/map_api"
 import NavBar from "./mapcomponents/navbar"
 import RecBar from "./mapcomponents/recbar"
+import Legend from "./mapcomponents/legend";
 import util from  "util"
 import "./map.css"
 
@@ -126,7 +127,7 @@ class Map extends Component {
         /**Function copied from  https://stackoverflow.com/questions/21513646/how-to-get-x-y-z-coordinates-of-tile-by-click-on-leaflet-map **/
         const x = parseInt(Math.floor( (lng + 180) / 360 * (1<<zoom) ));
         const y = parseInt(Math.floor( (1 - Math.log(Math.tan(lat.toRad()) + 1 / Math.cos(lat.toRad())) / Math.PI) / 2 * (1<<zoom) ));
-        return "" + zoom + "/" + x + "/" + y;
+        this.setState({x, y, zoom});
     };
 
     mapOnMouseMove = (e, zoom) => {
@@ -163,6 +164,12 @@ class Map extends Component {
                         setYear = {this.setYear}
                         year = {this.state.year}
                         toggleRecBar = {this.toggleRecBar}
+                />
+
+                <Legend x = {this.state.x}
+                        y = {this.state.y}
+                        z = {this.state.zoom}
+                        year = {this.state.year}
                 />
 
                 <MapAPI onClick={this.mapOnClick}

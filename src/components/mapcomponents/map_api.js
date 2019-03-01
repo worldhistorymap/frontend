@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import 'leaflet/dist/leaflet.css'
 import '../map.css'
-import { Map, Marker, Popup, TileLayer, LayerGroup, LayersControl } from 'react-leaflet'
+import { Map, Marker, Popup, TileLayer, LayersControl } from 'react-leaflet'
 import MapMarker from "./mapmarker"
 import L from "leaflet";
 import util from "util";
@@ -13,7 +13,7 @@ class MapAPI extends Component {
      tileRegions = ["iberia", "medieval_middle_east", "northern_europe"];
      tileRegionServer = process.env.REACT_APP_TILE_SERVER;
 
-     componentDidMount(): void {
+     componentDidMount() {
          this.tileOverlay = L.layerGroup().addTo(this.map.leafletElement);
          this.tileRegions.map(region => {
              L.tileLayer(this.getTiles(region), {
@@ -51,7 +51,7 @@ class MapAPI extends Component {
         return (
             <React.Fragment>
                 <Map zoomControl = {false}
-                     ref={ref => { this.map = ref; }}
+                     ref={e => { this.map = e; }}
                      onClick = {(e) => this.props.onClick(e)}
                      onMouseMove = {(e) => this.props.onMouseMove(e, this.map.leafletElement.getZoom())}
                      id = "map" center={position} zoom={6}>
