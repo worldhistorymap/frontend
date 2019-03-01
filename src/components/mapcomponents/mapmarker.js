@@ -34,7 +34,7 @@ class MapMarker extends Component {
                         e.target.openPopup();
                     }}
             >
-                <Popup>
+                <Popup autoPan={false}>
                     <button className="btn btn-primary btn-marker" onClick = {() => window.open(this.props.url, "_blank")}> {this.props.title} </button>
                     <p>{this.state.extract}</p>
                 </Popup>
