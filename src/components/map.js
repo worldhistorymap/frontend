@@ -3,12 +3,15 @@ import React, {Component} from "react";
 import MapAPI from "./mapcomponents/map_api"
 import NavBar from "./mapcomponents/navbar"
 import RecBar from "./mapcomponents/recbar"
-import Legend from "./mapcomponents/legend";
 import util from  "util"
 import "./map.css"
 
 
 class Map extends Component {
+
+    STAMEN_TERRAIN = 'https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png';
+    STAMEN_TERRAIN_BACKGROUND = 'https://stamen-tiles.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}.png';
+    WikiPageUrl =  "https://en.wikipedia.org/?curid=";
 
     state = {
         recBarZIndex: -1,
@@ -21,16 +24,10 @@ class Map extends Component {
         wikiMarkerNum: 1,
         noArticleMarkerNum: 1,
         year: 2019,
-        baseTiles: this.STAMEN_TERRAIN,
+        baseTiles: this.STAMEN_TERRAIN_BACKGROUND,
+        baseIsTerrainBackground: true
     };
 
-    STAMEN_TERRAIN = 'https://stamen-tiles-{s}.a.ssl.fastly.net/terrain-background/{z}/{x}/{y}{r}.png';
-    MAPBOX_CITY = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
-    /* Add back in attributes.
-    MAPBOX_ATTRIBUTE = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
-    STAMMEN_ATTRIBUTE = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    */
-    WikiPageUrl =  "https://en.wikipedia.org/?curid=";
 
 
     componentDidMount() {
@@ -42,14 +39,21 @@ class Map extends Component {
         }
     }
 
+    changeBaseMap () {
+        if (this.state.baseTiles === this.STAMEN_TERRAIN) {
+            this.setState({baseTiles: this.STAMEN_TERRAIN_BACKGROUND,
+                            baseIsTerrainBackground: true, 
+            });
+        } else {
+            this.setState({baseTiles: this.STAMEN_TERRAIN, 
+                            baseIsTerrainBackground: false, 
+            });
+        }
+    }
 
-    removeWikiMarkers = () => {
-       this.setState({markers: []});
-    };
 
     removeMarkers  = () => {
-        this.removeWikiMarkers();
-        this.setState({nullMarkers: []});
+        this.setState({markers: [], nullMarkers: []});
     };
 
     setWikiRange = val => {
@@ -164,12 +168,9 @@ class Map extends Component {
                         setYear = {this.setYear}
                         year = {this.state.year}
                         toggleRecBar = {this.toggleRecBar}
-                />
-
-                <Legend x = {this.state.x}
-                        y = {this.state.y}
-                        z = {this.state.zoom}
-                        year = {this.state.year}
+                        changeBaseMap = {this.changeBaseMap.bind(this)}
+                        baseIsTerrainBackground = {this.state.baseIsTerrainBackground}
+                        removeMarkers = {() => this.removeMarkers()}
                 />
 
                 <MapAPI onClick={this.mapOnClick}
@@ -177,6 +178,8 @@ class Map extends Component {
                         markers={this.state.markers}
                         nullMarkers = {this.state.nullMarkers}
                         year = {this.state.year}
+                        opacity = {this.state.opacity}
+                        baseTiles = {this.state.baseTiles}
                 />
 
                 <RecBar zIndex={this.state.recBarZIndex}/>

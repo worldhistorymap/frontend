@@ -1,28 +1,23 @@
 import React, {Component} from "react";
-import {Modal, Button, ControlLabel, FormControl, FormGroup, Dropdown, DropdownButton, MenuItem} from "react-bootstrap";
+import {Button, ControlLabel, FormControl, FormGroup, Dropdown, MenuItem} from "react-bootstrap";
 import DropdownMenu from "react-bootstrap/es/DropdownMenu";
 import "./navbar.css";
+import AboutButton from "./about";
+import Login from "./login";
 
 class NavBar extends Component {
+  
+    /**Change this later to import value from map.js*/
 
     constructor(props, context) {
         super(props, context);
-        this.showLogin = this.showLogin.bind(this);
-        this.closeLogin = this.closeLogin.bind(this);
         this.state = {
             opacity: 70,
             wikiRange: 5000,
         };
     }
 
-    showLogin() {
-        this.setState({ showLogin: true });
-    }
-
-    closeLogin() {
-        this.setState({ showLogin: false });
-    }
-
+   
 
     preventDefault = e => {
         e.preventDefault();
@@ -90,7 +85,6 @@ class NavBar extends Component {
                                                 <ControlLabel>Change the Opacity Percentage</ControlLabel>
                                                 <FormControl
                                                     type="number"
-                                                    placeholder="Enter a Opacity Percentage between 1 and 99"
                                                     onChange = {this.handleOpacity}
                                                     onSelect={this.opacityInputWasClicked}
                                                 />
@@ -133,6 +127,24 @@ class NavBar extends Component {
                                 </Dropdown>
                             </li>
                             <li>
+                                <Button onClick = {this.props.changeBaseMap}
+                                        className="btn btn-info navbar-btn" type="submit">
+                                            {
+                                                this.props.baseIsTerrainBackground ? (
+                                                    <span> Add Modern Day Overlay </span>
+                                                ) : (
+                                                    <span>Remove Modern Day Overlay</span>
+                                                )
+                                            }
+                                </Button>
+                            </li>
+                            <li>
+                                <Button onClick = {this.props.removeMarkers}
+                                        className="btn btn-info navbar-btn" type="submit">
+                                        <span>Remove Markers</span>
+                                 </Button>
+                            </li>
+                            <li>
                                 <form className ="navbar-form" onSubmit={this.preventDefault}>
                                     <input type='number' placeholder={this.state.year}
                                     onChange = {this.handleYearChange} />
@@ -148,23 +160,8 @@ class NavBar extends Component {
                                 </Button>
                             </li>
                         </ul>
-                        <Button className="btn btn-primary navbar-btn login-btn" onClick={this.showLogin}>
-                            Login
-                        </Button>
-                        <Modal show={this.state.showLogin} onHide={this.closeLogin}>
-                            <Modal.Header closeButton>
-                                <Modal.Title>Login</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body> We will soon have user accounts. These accounts will be used to provide recommendations. Furthermore, we will not sell your data. </Modal.Body>
-                            <Modal.Footer>
-                                <Button variant="Primary" onClick={this.closeLogin}>
-                                    Login
-                                </Button>
-                                <Button variant="secondary" onClick={this.closeLogin}>
-                                    SignUp
-                                </Button>
-                            </Modal.Footer>
-                        </Modal>
+                       <Login/> 
+                       <AboutButton />
                     </div>
                 </nav>
             </React.Fragment>
