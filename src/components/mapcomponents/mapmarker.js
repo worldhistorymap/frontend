@@ -15,7 +15,7 @@ class MapMarker extends Component {
 
     getExtract = title => {
         title = title.replace(/ /g, "_");
-        fetch(util.format("http://en.wikipedia.org/api/rest_v1/page/summary/%s", title))
+        fetch(util.format("https://en.wikipedia.org/api/rest_v1/page/summary/%s", title))
             .then(response => response.json())
             .then(data => {
                 this.setState({extract: data.extract});
@@ -34,7 +34,7 @@ class MapMarker extends Component {
                         e.target.openPopup();
                     }}
             >
-                <Popup>
+                <Popup autoPan={false}>
                     <button className="btn btn-primary btn-marker" onClick = {() => window.open(this.props.url, "_blank")}> {this.props.title} </button>
                     <p>{this.state.extract}</p>
                 </Popup>

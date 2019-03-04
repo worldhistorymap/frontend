@@ -20,6 +20,22 @@
     height: 7%;
 }
 
+#legend {
+    position: absolute;
+    height: 20%;
+    top: 10%;
+    width: 15%; 
+    z-index: 2;
+    background-color: transparent;
+}
+
+#legend-server {
+    width:50%;
+    left:25%; 
+    height:50%;
+    top:15%;
+}
+
 .navbar-nav {
     flex-direction: row;
 }
