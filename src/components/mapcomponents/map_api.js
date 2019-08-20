@@ -21,6 +21,7 @@ class MapAPI extends Component {
                  className: region,
              }).addTo(this.tileOverlay);
          });
+         this.props.setYear(1444);  
      }
 
     componentDidUpdate(prevProps) {
@@ -60,7 +61,6 @@ class MapAPI extends Component {
                             id= 'stamen-tiles'
                             zindex={0}
                         />
-
                     {this.props.markers.map(marker => (
                         <MapMarker key = {marker.id} position={[marker.lat, marker.lng]} url = {marker.url} title = {marker.title} />
                     ))}
