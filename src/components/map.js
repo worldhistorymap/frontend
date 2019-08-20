@@ -23,7 +23,7 @@ class Map extends Component {
         nullMarkers: [],
         wikiMarkerNum: 1,
         noArticleMarkerNum: 1,
-        year: 2019,
+        year: 1444,
         baseTiles: this.STAMEN_TERRAIN_BACKGROUND,
         baseIsTerrainBackground: true
     };
