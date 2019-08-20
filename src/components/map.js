@@ -145,7 +145,7 @@ class Map extends Component {
         if (year > 2019) {
             year = 2019;
         } else if (year < -3000) {
-            year = 3000;
+            year = -3000;
         }
 
         if (year == null || year === "") {
